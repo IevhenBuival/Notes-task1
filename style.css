@@ -1,0 +1,51 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+dialog {
+  margin: auto;
+  padding: 2rem;
+}
+
+dialog::backdrop {
+  background-color: hsl(200, 100%, 50%, 0.5);
+}
+
+body {
+  background-image: linear-gradient(120deg, #f6d365, #fda058);
+  font-family: "Poboto", sans-serif;
+  max-height: 100vh;
+  min-height: 100vh;
+}
+
+main {
+  flex: auto;
+}
+
+.note-item {
+  display: none;
+}
+
+svg {
+  pointer-events: none;
+}
+
+.note {
+  font-size: 1rem;
+  transition: all 0.5s ease;
+}
+
+.archived {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.fall {
+  transform: translateY(8rem) rotateZ(20deg);
+  opacity: 1;
+}
+.flex-btn {
+  flex-basis: 33.33%;
+}
