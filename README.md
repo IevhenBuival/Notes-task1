@@ -1,15 +1,16 @@
-###Hi this is Task-1 on vanilla js + bootstrap
+### Hi, this is Task-1 on vanilla js + bootstrap
 
 link:
+https://ievhenbuival.github.io/Notes-task1/
 
-We have Notes table and statistic table for notes category with counts notes
+We have Notes table and statistics table for notes categories (with quantity of notes per category).
 
-You may
-add note - blue button on top
-edit note - first button in action column in the end of row
-set arhive/active status - second button in action column in the end of row
-remove note - last button in action column in the end of row
+You may:
+add note - blue button on top,
+edit note - first button in action column at the end of row,
+set arhive/active status - second button in action column at the last of row.
+remove note - last button in action column at the last row.
 
-also you may change filter to see all notes of archived for this use select in top right part screen
+Also you may filter by notes status (active/archived/all) using drop-down select.
 
 Thanks for watching.
