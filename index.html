@@ -51,12 +51,12 @@
           class="container-fluid row align-items-center justify-content-center text-primary border-primary rounded py-1"
         >
           <div
-            class="col-1 border rounded border-primary text-truncate d-block"
+            class="col-2 border rounded border-primary text-truncate d-block"
           >
             Name
           </div>
           <div
-            class="col-2 border rounded border-primary text-truncate d-block"
+            class="col-1 border rounded border-primary text-truncate d-block"
           >
             Created
           </div>
@@ -83,7 +83,30 @@
         </div>
       </header>
       <main class="note-list container-fluid my-2"></main>
-      <footer class="footer-container">Footer table</footer>
+      <footer class="footer-container">
+        <div class="container">
+          <div>
+            <div class="row">
+              <div
+                class="col-5 border rounded border-primary text-truncate d-block"
+              >
+                Note category
+              </div>
+              <div
+                class="col-3 border rounded border-primary text-truncate d-block"
+              >
+                Active
+              </div>
+              <div
+                class="col-4 border rounded border-primary text-truncate d-block"
+              >
+                Archived
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="note-summary container mb-5 mt-2"></div>
+      </footer>
     </div>
     <script type="module" src="./app.js"></script>
   </body>

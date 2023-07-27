@@ -26,14 +26,13 @@ const renderDialogForm = (data, root) => {
   renderLabel("Category:", "category", form);
   const select = renderSelect("category", form, data.category);
 
-  const textarea = createTag("textarea", "form-control my-3");
+  const textarea = createTag("textarea", "form-control mb-3");
   textarea.setAttribute("id", "content");
   textarea.setAttribute("rows", 4);
+  renderLabel("Note:", "content", form, "text-primary my-2");
   if (editMode) textarea.innerText = data.content;
-  const textareaDiv = createTag("form", "form-floating");
-  textareaDiv.appendChild(textarea);
-  renderLabel("Note:", "content", textareaDiv, "text-primary");
-  form.appendChild(textareaDiv);
+  form.appendChild(textarea);
+
   if (editMode) {
     if (data.dates)
       renderLabel(

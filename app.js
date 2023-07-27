@@ -1,27 +1,41 @@
 import prepareNote from "./common/prepareNote.js";
-import { searchIndexById } from "./common/searchIndexById.js";
+import sumNotesCategory from "./common/sumNotesCategory.js";
 import validateDialog from "./common/validateDialog.js";
 import renderDialog from "./components/dialog/dialog.js";
 import renderNote from "./components/note-item.js";
-import { notes as initialnotes } from "./data/data.js";
+import renderSumTable from "./components/render-sum-table.js";
+import { notes as initialNotes } from "./data/data.js";
+import { searchIndexById } from "./common/searchIndexById.js";
+import { datasRegExp } from "./common/data.helpers.js";
 
-const noteList = document.querySelector(".note-list");
+const notes = [...initialNotes];
 
-const viewOption = document.querySelector(".view-note");
+function addNewNote(note) {
+  const data = prepareNote(note);
+  notes.push(data);
+  return data;
+}
 
-const newNoteButton = document.querySelector("[data-open-modal]");
-const dialog = document.querySelector("[data-modal]");
+function removeNote(searchKey) {
+  notes.splice(searchIndexById([...notes], searchKey), 1);
+}
 
-const notes = [...initialnotes];
+const sumNotes = sumNotesCategory([...notes]);
 let state = "active";
 
-newNoteButton.addEventListener("click", addNote);
-
-viewOption.addEventListener("click", viewNote);
+const noteList = document.querySelector(".note-list");
+const viewOption = document.querySelector(".view-note");
+const newNoteButton = document.querySelector("[data-open-modal]");
+const dialog = document.querySelector("[data-modal]");
+const noteSummary = document.querySelector(".note-summary");
 
 document.addEventListener("DOMContentLoaded", () => {
   renderList();
+  renderSumTable(noteSummary, sumNotes);
 });
+
+newNoteButton.addEventListener("click", addNote);
+viewOption.addEventListener("click", viewNote);
 
 dialog.addEventListener("click", (e) => {
   const dialogBounding = dialog.getBoundingClientRect();
@@ -39,6 +53,7 @@ function addNote(event) {
     { title: "", content: "", category: "" },
     dialog
   );
+
   dialogControl.form.addEventListener("submit", (event) => {
     event.preventDefault();
     const title = dialogControl.titleEl.value;
@@ -49,23 +64,23 @@ function addNote(event) {
     if (messages.length > 0) {
       dialogControl.errorEl.innerText = messages.join(",");
     } else {
-      const newNoteData = prepareNote({
+      const res = newNote({
         id: notes.length,
         title: title,
         category: category,
         content: content,
       });
-      const res = newNote(newNoteData);
+      renderSumTable(noteSummary, sumNotesCategory([...notes]));
       if (res.length > 0) dialogControl.errorEl.innerText = res.join(",");
       else dialog.close();
     }
   });
-
   dialog.showModal();
 }
+
 function newNote(data) {
   try {
-    renderNote(saveNote(data), noteList);
+    renderNote(addNewNote(data), noteList);
     return [];
   } catch {
     return ["error to create node"];
@@ -81,13 +96,14 @@ function editNoteEl(data, el) {
 
 function noteAction(event) {
   const item = event.target;
-
   if (item.classList[0] === "trash-btn") {
     const toremove = item.parentElement.parentElement;
     toremove.classList.add("fall");
-    removeNote(toremove);
+    const searchKey = toremove.children[0].innerText;
+    removeNote(searchKey);
     toremove.addEventListener("transitionend", () => {
       toremove.remove();
+      renderSumTable(noteSummary, sumNotesCategory([...notes]));
     });
   }
   if (item.classList[0] === "archive-btn") {
@@ -101,6 +117,7 @@ function noteAction(event) {
       toarhive.classList.add("archived");
       editNote.archived = true;
     }
+    renderSumTable(noteSummary, sumNotesCategory([...notes]));
     Refilter(state);
   }
   if (item.classList[0] === "edit-btn") {
@@ -114,16 +131,14 @@ function noteAction(event) {
       const category = dialogControl.categoryEl.value;
       const content = dialogControl.contentEl.value;
       const messages = validateDialog(title, category);
-
       if (messages.length > 0) {
         dialogControl.errorEl.innerText = messages.join(",");
       } else {
         editNote.title = title;
         editNote.category = category;
         editNote.content = content;
-
+        editNote.dates = datasRegExp(content);
         editNoteEl({ ...editNote }, toedit);
-
         dialog.close();
       }
     });
@@ -151,6 +166,7 @@ function Refilter(value) {
     }
   });
 }
+
 function viewNote(event) {
   state = event.target.value;
   Refilter(state);
@@ -161,14 +177,4 @@ function renderList() {
     const noteRow = renderNote(el, noteList);
     noteRow.addEventListener("click", noteAction);
   });
-}
-
-function saveNote(note) {
-  notes.push(note);
-  return note;
-}
-
-function removeNote(note) {
-  const searchKey = note.children[0].innerText;
-  notes.splice(searchIndexById([...notes], searchKey), 1);
 }

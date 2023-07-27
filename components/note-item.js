@@ -1,14 +1,6 @@
 import { createTag } from "../common/classedTagCreate.js";
-
-const renderField = function (text, size, root) {
-  const noteField = createTag(
-    "div",
-    "col-" + size + " border rounded border-primary bg-white text-truncate"
-  );
-  noteField.innerText = text;
-  root.appendChild(noteField);
-  return noteField;
-};
+import { dataFormat } from "../common/data.helpers.js";
+import { renderField } from "../common/fieldRender.js";
 
 const renderBtnField = function (text, size, root) {
   const noteField = createTag(
@@ -47,8 +39,8 @@ const renderNote = function (note, root) {
   noteItem.classList.add("note-item");
   noteItem.innerText = note.id;
   noteRow.appendChild(noteItem);
-  renderField(note.title, "1", noteRow);
-  renderField(note.created_at.toISOString(), "2", noteRow);
+  renderField(note.title, "2", noteRow);
+  renderField(dataFormat(note.created_at), "1", noteRow);
   renderField(note.category, "1", noteRow);
   renderField(note.content, "5", noteRow);
   renderField(note.dates, "2", noteRow);
@@ -56,7 +48,6 @@ const renderNote = function (note, root) {
   appendActionBtn("edit-btn", actionField);
   appendActionBtn("archive-btn", actionField);
   appendActionBtn("trash-btn", actionField);
-
   root.appendChild(noteRow);
   return noteRow;
 };
