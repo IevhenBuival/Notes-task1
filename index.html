@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equip="X-UA-Compatible" content="ie-edge" />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
@@ -17,23 +18,23 @@
     <title>Notes</title>
   </head>
   <body>
-    <dialog data-modal></dialog>
-    <div class="d-flex flex-column mx-2 vh-100">
+    <dialog data-modal class="border-info w-100"></dialog>
+    <div class="d-flex flex-column mx-2 vh-100 text-primary">
       <header class="container-fluid">
-        <div class="container-fluid row">
-          <div class="col-6 row">
+        <div class="container-fluid row my-1">
+          <div class="col-6 row my-2">
             <label class="col-auto">Filter by:</label>
             <div class="col-auto select">
-              <select name="notes-view" class="view-note">
+              <select name="notes-view" class="view-note text-primary">
                 <option value="active"><h2>Active</h2></option>
                 <option value="all"><h2>All</h2></option>
                 <option value="archive"><h2>Archive</h2></option>
               </select>
             </div>
           </div>
-          <div class="col-auto">
-            <label>New item</label>
-            <button data-open-modal>
+          <div class="col-auto text-primary">
+            <label>New item:</label>
+            <button data-open-modal class="btn bg-info my-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="1em"
